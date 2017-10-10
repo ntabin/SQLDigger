@@ -55,24 +55,15 @@ namespace SQLDigger
         private void bwConnect_DoWork(object sender, DoWorkEventArgs e)
         {
             string connectionString = e.Argument.ToString();
-
-
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
             }
-
-
-
             e.Result = connectionString;
             if (bwConnect.CancellationPending)
             {
                 e.Cancel = true;
             }
-
-
-
-
         }
         private void bwConnect_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
