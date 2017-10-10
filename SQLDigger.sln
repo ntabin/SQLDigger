@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLDigger", "SQLDigger\SQLDigger.csproj", "{93988B9B-E9EF-4356-A41B-F6ACE83DF738}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSSQLBase", "MSSQLBase\MSSQLBase.csproj", "{DE7160C8-816D-47F1-8937-23FBC6541A64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonWin", "CommonWin\CommonWin.csproj", "{F9423267-FB0C-4CB3-9596-06EAD7D90A5E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{93988B9B-E9EF-4356-A41B-F6ACE83DF738}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93988B9B-E9EF-4356-A41B-F6ACE83DF738}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93988B9B-E9EF-4356-A41B-F6ACE83DF738}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93988B9B-E9EF-4356-A41B-F6ACE83DF738}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE7160C8-816D-47F1-8937-23FBC6541A64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE7160C8-816D-47F1-8937-23FBC6541A64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE7160C8-816D-47F1-8937-23FBC6541A64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE7160C8-816D-47F1-8937-23FBC6541A64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9423267-FB0C-4CB3-9596-06EAD7D90A5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9423267-FB0C-4CB3-9596-06EAD7D90A5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9423267-FB0C-4CB3-9596-06EAD7D90A5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9423267-FB0C-4CB3-9596-06EAD7D90A5E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
