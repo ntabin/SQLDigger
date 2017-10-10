@@ -178,6 +178,7 @@
             // 
             // bwConnect
             // 
+            this.bwConnect.WorkerSupportsCancellation = true;
             this.bwConnect.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwConnect_DoWork);
             this.bwConnect.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwConnect_RunWorkerCompleted);
             // 

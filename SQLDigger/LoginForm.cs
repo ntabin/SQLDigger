@@ -26,14 +26,26 @@ namespace SQLDigger
         }
         private void btnConnect_Click(object sender, EventArgs e)
         {
-            this.LoadingMode(true);
-            SqlConnection myConnection = new SqlConnection();
-            SqlConnectionStringBuilder myBuilder = new SqlConnectionStringBuilder();
-            myBuilder.UserID = tbLogin.Text;
-            myBuilder.Password = tbPassword.Text;
-            myBuilder.DataSource = tbServerName.Text;
-            myBuilder.ConnectTimeout = Convert.ToInt32(tbTimeout.Text);
-            bwConnect.RunWorkerAsync(myBuilder.ConnectionString);
+            Button btn = sender as Button;
+
+            if (string.Equals(btn.Text, "Connect"))
+            {
+                btn.Text = "Cancel";
+                this.LoadingMode(true);
+                SqlConnection myConnection = new SqlConnection();
+                SqlConnectionStringBuilder myBuilder = new SqlConnectionStringBuilder();
+                myBuilder.UserID = tbLogin.Text;
+                myBuilder.Password = tbPassword.Text;
+                myBuilder.DataSource = tbServerName.Text;
+                myBuilder.ConnectTimeout = Convert.ToInt32(tbTimeout.Text);
+                bwConnect.RunWorkerAsync(myBuilder.ConnectionString);
+            }
+            else
+            {
+                btn.Text = "Cancelling...";
+                btn.Enabled = false;
+                bwConnect.CancelAsync();
+            }
         }
         private void tbTimeout_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -43,26 +55,45 @@ namespace SQLDigger
         private void bwConnect_DoWork(object sender, DoWorkEventArgs e)
         {
             string connectionString = e.Argument.ToString();
-            
-                using (SqlConnection con = new SqlConnection(connectionString))
-                {
-                    con.Open();
-                }
+
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+            }
+
+
+
             e.Result = connectionString;
+            if (bwConnect.CancellationPending)
+            {
+                e.Cancel = true;
+            }
+
+
+
+
         }
         private void bwConnect_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (e.Error != null)
+            this.LoadingMode(false);
+            if (!e.Cancelled)
             {
-                this.LoadingMode(false);
-                MessageBox.Show(e.Error.Message, "bwConnect", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
+                if (e.Error != null)
+                {
+                    MessageBox.Show(e.Error.Message, "bwConnect", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 DBConnection.DbCon.SetConnection(e.Result.ToString());
                 this._MainForm.SetConnectionTitle(string.Format("Connected to {0}", tbServerName.Text));
                 this.SuccessConnect = true;
                 this.Close();
+            }
+            else
+            {
+                if (e.Error != null)
+                {
+
+                }
             }
         }
         #endregion
@@ -71,12 +102,21 @@ namespace SQLDigger
             this.tbServerName.Enabled =
                 this.tbLogin.Enabled =
                 this.tbPassword.Enabled =
-                this.btnConnect.Enabled =
-                this.tbTimeout.Enabled = 
+                this.tbTimeout.Enabled =
                 !loading;
             this.pbLoading.Visible = loading;
+
+
+            btnConnect.Text = (loading) ? "Cancel" : "Connect";
+
+            if (!loading)
+            {
+                btnConnect.Enabled = true;
+            }
+
+
         }
 
-        
+
     }
 }

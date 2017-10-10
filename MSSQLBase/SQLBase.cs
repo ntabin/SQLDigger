@@ -67,7 +67,7 @@ namespace MSSQLBase
         #endregion
         public List<string> GetDatabaseList()
         {
-            string query = "SELECT [name] FROM master.dbo.sysdatabases WHERE dbid > 6 ORDER BY [name]";
+            string query = "SELECT [name] FROM master.dbo.sysdatabases  WHERE NOT status & 512 = 512 ANd dbid > 4 ORDER BY [name]";
             return (from DataRow row in this.ExecuteQuery(query).Rows
                     select row[0].ToString()).ToList();
         }

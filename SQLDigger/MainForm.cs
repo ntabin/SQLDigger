@@ -237,7 +237,8 @@ namespace SQLDigger
         {
             cmbDB.Items.Clear();
             MSSQLBase.SQLBase b = new MSSQLBase.SQLBase(DBConnection.DbCon.Connection);
-            cmbDB.AddItems(b.GetDatabaseList().Cast<object>().ToList());
+            List<string> databases = b.GetDatabaseList();
+            cmbDB.AddItems(databases.Cast<object>().ToList());
         }
         private void PopulateTable(string dbName)
         {
