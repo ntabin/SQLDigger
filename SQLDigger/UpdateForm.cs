@@ -80,7 +80,8 @@ namespace SQLDigger
             }
 
             this.ExecuteUpdate(query);
-            this.Close();
+            if(this.SuccessSave)
+                this.Close();
         }
 
         #region "ExecuteQuery"
@@ -110,7 +111,7 @@ namespace SQLDigger
             string query = string.Format("use {0};", this._DBName);
             string fields = string.Join(",", from t in this._ColumnDetails
                                              where !t.IsIdentity && !this._TypesNotEditable.Contains(t.DataType)
-                                             select t.ColumnName);
+                                             select string.Format("[{0}]",t.ColumnName));
             string values = string.Join(",", from t in this._ColumnDetails
                                              where !t.IsIdentity && !this._TypesNotEditable.Contains(t.DataType)
                                              select string.Format("@{0}", t.ColumnName));
@@ -122,7 +123,7 @@ namespace SQLDigger
             string query = string.Format("use {0};", this._DBName);
             string fields = string.Join(",", from t in this._ColumnDetails
                                              where !t.IsIdentity && !this._TypesNotEditable.Contains(t.DataType)
-                                             select string.Format("{0}=@{0}", t.ColumnName));
+                                             select string.Format("[{0}]=@{0}", t.ColumnName));
             string where = string.Join("AND", from t in this._ColumnDetails
                                               where t.IsPrimaryKey
                                               select string.Format("{0}={1}", t.ColumnName, t.ColumnValue));

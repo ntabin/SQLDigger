@@ -93,6 +93,36 @@ namespace SQLDigger.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap if_delete_326606 {
+            get {
+                object obj = ResourceManager.GetObject("if_delete_326606", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap if_icons_delete_1564502 {
+            get {
+                object obj = ResourceManager.GetObject("if_icons_delete_1564502", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap if_icons_delete_15645021 {
+            get {
+                object obj = ResourceManager.GetObject("if_icons_delete_15645021", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap NoTresspassing {
             get {
                 object obj = ResourceManager.GetObject("NoTresspassing", resourceCulture);

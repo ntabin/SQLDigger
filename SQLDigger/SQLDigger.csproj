@@ -60,6 +60,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColumnDetail.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="StoredProcDetail.cs" />
     <Compile Include="ExecStoredProcForm.cs">
       <SubType>Form</SubType>
@@ -99,14 +104,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="UpdateForm.resx">
       <DependentUpon>UpdateForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -141,7 +141,12 @@
     <Content Include="ExternalReference\DBConnection.dll" />
     <Content Include="ExternalReference\DgvFilterPopup.dll" />
     <Content Include="if_shovel_1880375.ico" />
+    <None Include="Resources\if_delete_326606%281%29.png" />
+    <Content Include="Resources\if_delete_326606.png" />
+    <None Include="Resources\if_icons_delete_1564502.ico" />
+    <None Include="Resources\if_icons_delete_15645021.ico" />
     <Content Include="Resources\if_shovel_1880375.ico" />
+    <Content Include="Resources\if_Streamline-70_185090.ico" />
     <Content Include="Resources\NoTresspassing.gif" />
     <None Include="Resources\Export_16px.png" />
     <None Include="Resources\Copy_16x.png" />

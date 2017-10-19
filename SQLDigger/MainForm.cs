@@ -21,6 +21,7 @@ namespace SQLDigger
             public string DBName;
             public Dictionary<string, object> ParameterByValue;
         }
+        private int _ScrollVal = 0;
         #region "Public"
         public void SetConnectionTitle(string title)
         {
@@ -68,6 +69,63 @@ namespace SQLDigger
             string dbName = cmbDB.SelectedItem.ToString();
             string tableName = dgvTables.Rows[rowIndex].Cells[0].Value.ToString();
             this.Exec(dbName, tableName);
+        }
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (dgvResult.Rows.Count == 0)
+            {
+                MessageBox.Show("No record to delete.", "Delete", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else if ((from DataGridViewRow row in dgvColumns.Rows
+                      where Convert.ToBoolean(row.Cells["isPrimaryKeyDataGridViewCheckBoxColumn"].Value)
+                      select row).ToList().Count() == 0)
+            {
+                MessageBox.Show("Cannot delete record without primary key", "Delete", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if(DialogResult.Yes == MessageBox.Show("Are you sure you want to delete rows?","Delete",MessageBoxButtons.YesNo,MessageBoxIcon.Question))
+            {
+                string dbName = this.GetDBName();
+                string tableName = this.GetTableName();
+                Dictionary<string, object> paramByValues = new Dictionary<string, object>();
+                int count = 0;
+                string whereQuery = "(";
+                foreach (DataGridViewRow row in dgvResult.SelectedRows)
+                {
+                    string whereSubQuery = "";
+                    foreach (ColumnDetail col in this.GetColumnDetails(true, row.Index).Where(x=>x.IsPrimaryKey))
+                    {
+                        string parameterName = string.Format("@{0}{1}", col.ColumnName, count.ToString());
+                        if (whereSubQuery != "")
+                            whereSubQuery = " AND ";
+                        whereSubQuery = string.Format("{0}={1}",col.ColumnName,parameterName);
+                        paramByValues.Add(parameterName,col.ColumnValue);
+
+                    }
+
+                    if (whereQuery != "(")
+                        whereQuery = whereQuery + " OR (";
+                    whereQuery = whereQuery + whereSubQuery + ")";
+                    count++;
+                }
+
+
+                string deleteQuery = string.Format("use {0};DELETE FROM {1} WHERE {2};", dbName, tableName, whereQuery);
+
+                try
+                {
+                    MSSQLBase.SQLBase s = new MSSQLBase.SQLBase(DBConnection.DbCon.Connection);
+                    s.ExecuteNonQuery(deleteQuery, paramByValues);
+                    btnExec.PerformClick();
+                    MessageBox.Show(string.Format("{0} row/s deleted",count.ToString(),"Delete",MessageBoxButtons.OK,MessageBoxIcon.Information));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Delete", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
         private void bsResult_ListChanged(object sender, ListChangedEventArgs e)
         {
@@ -149,6 +207,13 @@ namespace SQLDigger
             }
              
         }
+        private void dgvResult_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                btnDelete.PerformClick();
+            }
+        }
         #endregion
         #region "dgvStoredProcs"
         private void dgvStoredProcs_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -204,6 +269,19 @@ namespace SQLDigger
         private void bgTableQuery_DoWork(object sender, DoWorkEventArgs e)
         {
             string query = e.Argument.ToString();
+            using (SqlConnection con = new SqlConnection(DBConnection.DbCon.Connection))
+            {
+                SqlCommand com = new SqlCommand(query, con);
+
+            }
+
+
+
+
+
+
+
+                
             MSSQLBase.SQLBase b = new MSSQLBase.SQLBase(DBConnection.DbCon.Connection);
             e.Result = b.ExecuteQuery(query);
             if (bgTableQuery.CancellationPending)
@@ -440,6 +518,8 @@ namespace SQLDigger
                 lblQuery.Text = "StoredProc Executed Successfully.";
             }
         }
+
+
         #endregion
 
         
