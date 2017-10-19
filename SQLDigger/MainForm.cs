@@ -104,7 +104,7 @@ namespace SQLDigger
                         paramByValues.Add(parameterName,col.ColumnValue);
 
                     }
-
+                    string a = "";
                     if (whereQuery != "(")
                         whereQuery = whereQuery + " OR (";
                     whereQuery = whereQuery + whereSubQuery + ")";
